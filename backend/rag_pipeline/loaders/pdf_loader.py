@@ -1,6 +1,7 @@
 # pdf_loader.py
 
 from langchain_community.document_loaders import PDFMinerLoader
+from langchain_community.document_loaders import PDFMinerPDFasHTMLLoader
 
 
 def pdf_loader(source_path: str):
@@ -9,6 +10,20 @@ def pdf_loader(source_path: str):
     loader = PDFMinerLoader(
         source_path,
         mode='page',
+    )
+    
+    pages = []
+    for page in loader.load():
+        pages.append(page)
+    print(f"Loaded {len(pages)} pages from {source_path}")
+
+    return pages
+
+def pdf_html_loader(source_path: str):
+    print("Loading documents from a PDF...")
+
+    loader = PDFMinerPDFasHTMLLoader(
+        source_path
     )
     
     pages = []
@@ -30,6 +45,9 @@ def main():
 
     for doc in docs:
         print(f"Document page {doc.metadata['page']}: \n--------------\n{doc.page_content}\n")
+
+    with open("./PDF.html", "w") as f:
+        f.write(pdf_html_loader(file_path)[0].page_content)
 
 
 if __name__ == "__main__":
