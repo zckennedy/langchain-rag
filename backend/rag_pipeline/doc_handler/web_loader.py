@@ -1,8 +1,7 @@
 # document_loader.py
 # This module is responsible for loading documents into the RAG pipeline.
-import bs4
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_text_splitters import HTMLHeaderTextSplitter, HTMLSemanticPreservingSplitter
+
 
 
 def web_loader(source_url: str):
